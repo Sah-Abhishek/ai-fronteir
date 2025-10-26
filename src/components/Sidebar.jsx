@@ -1,7 +1,10 @@
 import {
   ArrowLeftOnRectangleIcon,
   HomeIcon,
-  PaperAirplaneIcon
+  PaperAirplaneIcon,
+  Cog6ToothIcon,
+  PencilSquareIcon,
+  NewspaperIcon
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -10,6 +13,9 @@ import LogoutModal from "../modals/LogoutModal";
 const navItems = [
   { name: "Dashboard", icon: HomeIcon, path: "/dashboard" },
   { name: "NewsLetters", icon: PaperAirplaneIcon, path: "/newsletter" },
+  { name: "Quiz", icon: PencilSquareIcon, path: "/quiz" },
+  { name: "News", icon: NewspaperIcon, path: "/news" },
+  { name: "Settings", icon: Cog6ToothIcon, path: "/settings" },
 ];
 
 export default function Sidebar() {
@@ -33,9 +39,8 @@ export default function Sidebar() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-lg font-semibold">
-              Project Started Pack            </h1>
+              AI fronteir            </h1>
           </div>
-          <p className="text-xs text-gray-400 ml-8">v1.0.0</p>
         </div>
 
         {/* Navigation */}

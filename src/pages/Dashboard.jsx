@@ -6,6 +6,8 @@ import Step2 from "../components/onBoardingSteps/Step2";
 import Step3 from "../components/onBoardingSteps/Step3";
 import SetupWizard from "../components/SteupWizard";
 import { useUserStore } from "../store/UserStore";
+import NewsletterOpenRateChart from "../components/NewsLetterOpenRateChart";
+import NewsletterOpenHeatmap from "../components/NewsLetterOpenRateChart";
 
 export default function Dashboard() {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
@@ -56,7 +58,7 @@ export default function Dashboard() {
       {/* Header */}
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">
-          Welcome back, {user?.name || "User"}! 👋
+          Welcome back, {user?.name || "User"}!
         </h1>
         <p className="text-gray-600">
           Here’s a snapshot of your account and subscriptions.
@@ -83,6 +85,9 @@ export default function Dashboard() {
           <p className="text-gray-500">You are not subscribed to any topics yet.</p>
         )}
       </section>
+      <div className="m-4">
+        <NewsletterOpenHeatmap />
+      </div>
 
       {/* Onboarding Wizard */}
       <SetupWizard

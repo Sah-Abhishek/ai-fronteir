@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   // Show wizard only if user hasn't completed onboarding
   useEffect(() => {
-    const onboarded = user?.onboardingCompleted;
+    const onboarded = user?.onboardingCompleted || localStorage.getItem('onboard_complete');
     if (!onboarded) setIsWizardOpen(true);
   }, []);
 

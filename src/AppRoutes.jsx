@@ -7,6 +7,9 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import LandingPage from "./pages/LandingPage";
 import NewsletterPage from "./pages/NewsLetterPage.jsx";
+import QuizzesPage from "./pages/QuizzesPage.jsx";
+import SolveQuiz from "./pages/SolveQuiz.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +25,9 @@ const AppRoutes = () => {
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/newsletter" element={<NewsletterPage />} />
+          <Route path="/quiz" element={<QuizzesPage />} />
+          <Route path="/quiz/:id" element={<SolveQuiz />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
     </Routes>

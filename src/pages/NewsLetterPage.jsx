@@ -44,8 +44,12 @@ export default function NewsletterPage() {
                 #
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                Heading
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
                 Topics
               </th>
+
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
                 Status
               </th>
@@ -74,6 +78,9 @@ export default function NewsletterPage() {
                   className="hover:bg-gray-50 transition-colors duration-200"
                 >
                   <td className="px-6 py-4 text-sm text-gray-700">{idx + 1}</td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    {newsletter.heading.length > 50 ? newsletter.heading.slice(0, 50) + "..." : newsletter.heading}
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
                     {newsletter.topics.join(", ")}
                   </td>

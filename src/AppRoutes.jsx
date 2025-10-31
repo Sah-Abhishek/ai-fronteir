@@ -10,6 +10,8 @@ import NewsletterPage from "./pages/NewsLetterPage.jsx";
 import QuizzesPage from "./pages/QuizzesPage.jsx";
 import SolveQuiz from "./pages/SolveQuiz.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
+import NewsletterReadPage from "./pages/NewsletterReadPage.jsx";
+import NewsPage from "./pages/NewsPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +30,9 @@ const AppRoutes = () => {
           <Route path="/quiz" element={<QuizzesPage />} />
           <Route path="/quiz/:id" element={<SolveQuiz />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/newsletter/:id" element={<NewsletterReadPage />} />
+          <Route path="/news" element={<NewsPage />} />
+
         </Route>
       </Route>
     </Routes>

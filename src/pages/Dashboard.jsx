@@ -8,6 +8,7 @@ import SetupWizard from "../components/SteupWizard";
 import { useUserStore } from "../store/UserStore";
 import NewsletterOpenRateChart from "../components/NewsLetterOpenRateChart";
 import NewsletterOpenHeatmap from "../components/NewsLetterOpenRateChart";
+import NewsletterSuggestions from "../components/dashboard/NewsletterSuggestions";
 
 export default function Dashboard() {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
@@ -87,6 +88,10 @@ export default function Dashboard() {
       </section>
       <div className="m-4">
         <NewsletterOpenHeatmap />
+      </div>
+
+      <div className="m-4">
+        <NewsletterSuggestions />
       </div>
 
       {/* Onboarding Wizard */}

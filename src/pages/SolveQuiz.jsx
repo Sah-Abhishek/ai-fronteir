@@ -11,6 +11,8 @@ const SolveQuiz = () => {
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [newsletterId, setNewsletterId] = useState(null);
+
 
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const auth_token = localStorage.getItem("auth_token");
@@ -25,6 +27,7 @@ const SolveQuiz = () => {
           },
         });
         setQuiz(res.data.quiz);
+        setNewsletterId(res.data.quiz.newsletterId); // <--- updated
       } catch (err) {
         console.error("Failed to fetch quiz:", err);
         toast.error("Failed to load quiz");
@@ -51,7 +54,8 @@ const SolveQuiz = () => {
       quizId: quiz._id,
       responses: quiz.questions.map((q) => ({
         questionId: q._id,
-        selectedAnswer: answers[q._id] + 1 ?? null, // index of chosen option
+        selectedAnswer:
+          answers[q._id] != null ? answers[q._id] + 1 : null, // Safe null check
       })),
     };
 
@@ -73,6 +77,14 @@ const SolveQuiz = () => {
     }
   };
 
+  const handleRead = () => {
+    if (!newsletterId) {
+      toast.error("Newsletter not available yet");
+      return;
+    }
+    navigate(`/newsletter/${newsletterId}`);
+  };
+
   // Cancel
   const handleCancel = () => navigate("/quiz");
 
@@ -84,7 +96,18 @@ const SolveQuiz = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md">
-      <h1 className="text-3xl font-bold mb-6"> Quiz Attempt</h1>
+      <div className="flex  items-center justify-between ">
+        <h1 className="text-3xl font-bold m-6"> Quiz Attempt</h1>
+        <div className="m-4">
+          <button
+            onClick={handleRead}
+            className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition"
+          >
+            Read
+          </button>
+        </div>
+      </div>
+
 
       {quiz.questions?.map((q) => (
         <div

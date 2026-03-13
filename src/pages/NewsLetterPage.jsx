@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -7,6 +8,7 @@ export default function NewsletterPage() {
   const [newsletters, setNewsletters] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const apiUrl = `${backendUrl}/newsletter`; // your backend endpoint
 
@@ -75,7 +77,8 @@ export default function NewsletterPage() {
               newsletters.map((newsletter, idx) => (
                 <tr
                   key={newsletter._id}
-                  className="hover:bg-gray-50 transition-colors duration-200"
+                  onClick={() => navigate(`/newsletter/${newsletter._id}`)}
+                  className="hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                 >
                   <td className="px-6 py-4 text-sm text-gray-700">{idx + 1}</td>
                   <td className="px-6 py-4 text-sm text-gray-700">

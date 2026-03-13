@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -8,9 +9,7 @@ const NewsletterReadPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const auth_token = localStorage.getItem('auth_token')
-
-  // Replace this with the actual newsletterId or get it from route params
-  const newsletterId = "69002f0770401647fc8e5924";
+  const { id: newsletterId } = useParams();
 
   useEffect(() => {
     const fetchNewsletter = async () => {

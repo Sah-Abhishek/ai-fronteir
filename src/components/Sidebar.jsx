@@ -4,7 +4,8 @@ import {
   PaperAirplaneIcon,
   Cog6ToothIcon,
   PencilSquareIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  ClockIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ const navItems = [
   { name: "NewsLetters", icon: PaperAirplaneIcon, path: "/newsletter" },
   { name: "Quiz", icon: PencilSquareIcon, path: "/quiz" },
   { name: "News", icon: NewspaperIcon, path: "/news" },
+  { name: "Timelines", icon: ClockIcon, path: "/timelines" },
   { name: "Settings", icon: Cog6ToothIcon, path: "/settings" },
 ];
 

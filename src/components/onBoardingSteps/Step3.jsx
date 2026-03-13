@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { MessageSquare, Camera, Server, Scale, Zap, HardHat } from "lucide-react";
+import { Cpu, Briefcase, FlaskConical, Heart, Film, Trophy, Landmark, Leaf, GraduationCap, Palette } from "lucide-react";
 
 const options = [
-  { value: "LLMs", label: "Large Language Models", icon: MessageSquare, description: "Deep dives into GPT, Llama, and model architecture." },
-  { value: "ComputerVision", label: "Computer Vision", icon: Camera, description: "Image processing, object detection, and visual recognition." },
-  { value: "MLOps", label: "MLOps & Deployment", icon: Server, description: "Tools, pipelines, and strategies for production AI." },
-  { value: "Ethics", label: "AI Ethics & Policy", icon: Scale, description: "Discussions on bias, regulation, and responsible AI." },
-  { value: "GenerativeAI", label: "Generative AI", icon: Zap, description: "Creating text, images, code, and music with AI." },
-  { value: "Robotics", label: "Robotics", icon: HardHat, description: "AI in physical systems, automation, and hardware." }
+  { value: "Technology", label: "Technology", icon: Cpu, description: "Latest in tech, gadgets, software, and innovation." },
+  { value: "Business", label: "Business & Finance", icon: Briefcase, description: "Markets, startups, economy, and industry trends." },
+  { value: "Science", label: "Science", icon: FlaskConical, description: "Discoveries, research, space, and breakthroughs." },
+  { value: "Health", label: "Health & Wellness", icon: Heart, description: "Medicine, fitness, mental health, and nutrition." },
+  { value: "Entertainment", label: "Entertainment", icon: Film, description: "Movies, music, gaming, and pop culture." },
+  { value: "Sports", label: "Sports", icon: Trophy, description: "Scores, highlights, and stories from the sports world." },
+  { value: "Politics", label: "Politics", icon: Landmark, description: "Government, policy, elections, and world affairs." },
+  { value: "Environment", label: "Environment", icon: Leaf, description: "Climate, sustainability, and environmental news." },
+  { value: "Education", label: "Education", icon: GraduationCap, description: "Learning, skills, courses, and academic trends." },
+  { value: "Culture", label: "Arts & Culture", icon: Palette, description: "Art, literature, history, and cultural stories." },
 ];
 
 const Step3 = ({ nextStep }) => {
@@ -33,7 +37,7 @@ const Step3 = ({ nextStep }) => {
   return (
     <div className="flex flex-col items-center w-full">
       <h2 className="text-2xl font-extrabold text-gray-800 mb-8 tracking-tight">
-        What AI topics are you most interested in?
+        What topics are you most interested in?
       </h2>
       <p className="text-gray-500 mb-6 text-center">
         Select all that apply to personalize your newsletter content.

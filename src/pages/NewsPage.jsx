@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Loader2, ExternalLink, Clock } from "lucide-react";
+import { Loader2, ExternalLink, Clock, Newspaper, Globe } from "lucide-react";
+import GlobalPerspectives from "../components/news/GlobalPerspectives";
 
 const NewsPage = () => {
   const [articles, setArticles] = useState([]);
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTopic, setActiveTopic] = useState("all");
+  const [activeTab, setActiveTab] = useState("feed");
 
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const auth_token = localStorage.getItem("auth_token");
@@ -48,6 +50,11 @@ const NewsPage = () => {
             a.description?.toLowerCase().includes(activeTopic.toLowerCase())
         );
 
+  const tabs = [
+    { id: "feed", label: "News Feed", icon: Newspaper },
+    { id: "perspectives", label: "Global Perspectives", icon: Globe },
+  ];
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -64,126 +71,151 @@ const NewsPage = () => {
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-1">News Feed</h1>
-          <p className="text-gray-500">Latest articles based on your subscribed topics</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-1">News</h1>
+          <p className="text-gray-500">Stay informed with your personalized feed and global coverage analysis</p>
         </div>
 
-        {/* Topic filters */}
-        {topics.length > 0 && (
-          <div className="flex gap-2 mb-6 flex-wrap">
+        {/* Tabs */}
+        <div className="flex gap-1 mb-6 bg-gray-100 p-1 rounded-xl w-fit">
+          {tabs.map((tab) => (
             <button
-              onClick={() => setActiveTopic("all")}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
-                activeTopic === "all"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                activeTab === tab.id
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              All
+              <tab.icon className="w-4 h-4" />
+              {tab.label}
             </button>
-            {topics.map((topic) => (
-              <button
-                key={topic}
-                onClick={() => setActiveTopic(topic)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
-                  activeTopic === topic
-                    ? "bg-indigo-600 text-white"
-                    : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
-                }`}
-              >
-                {topic}
-              </button>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
 
-        {filtered.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
-            <p className="text-gray-500 text-lg">No articles found</p>
-          </div>
+        {/* Tab content */}
+        {activeTab === "perspectives" ? (
+          <GlobalPerspectives />
         ) : (
           <>
-            {/* Featured article */}
-            <a
-              href={filtered[0].url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block mb-6 group"
-            >
-              <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300">
-                <div className="md:flex">
-                  <div className="md:w-1/2 h-56 md:h-72 overflow-hidden">
-                    <img
-                      src={filtered[0].image}
-                      alt={filtered[0].title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => { e.target.style.display = "none"; }}
-                    />
-                  </div>
-                  <div className="md:w-1/2 p-6 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="px-2.5 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">
-                        Featured
-                      </span>
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {timeAgo(filtered[0].publishedAt)}
-                      </span>
-                    </div>
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors leading-tight">
-                      {filtered[0].title}
-                    </h2>
-                    <p className="text-gray-500 text-sm line-clamp-3 mb-4">
-                      {filtered[0].description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-gray-400">{filtered[0].source}</span>
-                      <span className="text-indigo-600 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Read <ExternalLink className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
+            {/* Topic filters */}
+            {topics.length > 0 && (
+              <div className="flex gap-2 mb-6 flex-wrap">
+                <button
+                  onClick={() => setActiveTopic("all")}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
+                    activeTopic === "all"
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
+                  }`}
+                >
+                  All
+                </button>
+                {topics.map((topic) => (
+                  <button
+                    key={topic}
+                    onClick={() => setActiveTopic(topic)}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
+                      activeTopic === topic
+                        ? "bg-indigo-600 text-white"
+                        : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
+                    }`}
+                  >
+                    {topic}
+                  </button>
+                ))}
               </div>
-            </a>
+            )}
 
-            {/* Articles grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filtered.slice(1).map((article, i) => (
+            {filtered.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
+                <p className="text-gray-500 text-lg">No articles found</p>
+              </div>
+            ) : (
+              <>
+                {/* Featured article */}
                 <a
-                  key={i}
-                  href={article.url}
+                  href={filtered[0].url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200"
+                  className="block mb-6 group"
                 >
-                  <div className="h-40 overflow-hidden">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => { e.target.src = "https://placehold.co/600x300/f3f4f6/9ca3af?text=No+Image"; }}
-                    />
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs font-medium text-indigo-600">{article.source}</span>
-                      <span className="text-gray-300">·</span>
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {timeAgo(article.publishedAt)}
-                      </span>
+                  <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300">
+                    <div className="md:flex">
+                      <div className="md:w-1/2 h-56 md:h-72 overflow-hidden">
+                        <img
+                          src={filtered[0].image}
+                          alt={filtered[0].title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => { e.target.style.display = "none"; }}
+                        />
+                      </div>
+                      <div className="md:w-1/2 p-6 flex flex-col justify-center">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="px-2.5 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">
+                            Featured
+                          </span>
+                          <span className="text-xs text-gray-400 flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {timeAgo(filtered[0].publishedAt)}
+                          </span>
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors leading-tight">
+                          {filtered[0].title}
+                        </h2>
+                        <p className="text-gray-500 text-sm line-clamp-3 mb-4">
+                          {filtered[0].description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-gray-400">{filtered[0].source}</span>
+                          <span className="text-indigo-600 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Read <ExternalLink className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 group-hover:text-indigo-600 transition-colors mb-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-gray-500 text-xs line-clamp-2">
-                      {article.description}
-                    </p>
                   </div>
                 </a>
-              ))}
-            </div>
+
+                {/* Articles grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {filtered.slice(1).map((article, i) => (
+                    <a
+                      key={i}
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200"
+                    >
+                      <div className="h-40 overflow-hidden">
+                        <img
+                          src={article.image}
+                          alt={article.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => { e.target.src = "https://placehold.co/600x300/f3f4f6/9ca3af?text=No+Image"; }}
+                        />
+                      </div>
+                      <div className="p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-xs font-medium text-indigo-600">{article.source}</span>
+                          <span className="text-gray-300">·</span>
+                          <span className="text-xs text-gray-400 flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {timeAgo(article.publishedAt)}
+                          </span>
+                        </div>
+                        <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 group-hover:text-indigo-600 transition-colors mb-2">
+                          {article.title}
+                        </h3>
+                        <p className="text-gray-500 text-xs line-clamp-2">
+                          {article.description}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
           </>
         )}
       </div>

@@ -12,6 +12,7 @@ import SolveQuiz from "./pages/SolveQuiz.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
 import NewsletterReadPage from "./pages/NewsletterReadPage.jsx";
 import NewsPage from "./pages/NewsPage.jsx";
+import EventTimelinePage from "./pages/EventTimelinePage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +33,7 @@ const AppRoutes = () => {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/newsletter/:id" element={<NewsletterReadPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/timelines" element={<EventTimelinePage />} />
 
         </Route>
       </Route>
